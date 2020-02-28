@@ -213,6 +213,18 @@ let generateRefreshTokenExpiryTime = () => {
     return ((Date.now() / 1000) + secondsUntilExpire);
 }
 
+UserSchema.virtual('id').get(function() {
+    return this._id.toHexString();
+});
+
+UserSchema.set('toJSON', {
+    getters: true,
+});
+
+UserSchema.set('toObject', {
+    getters: true,
+});
+
 const User = mongoose.model('User', UserSchema);
 
 module.exports = { User };

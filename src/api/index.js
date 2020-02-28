@@ -2,8 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const graphqlHTTP = require('express-graphql');
-const config = require('../../config');
-// const schema = require('./schema');
+const config = require('../../config')();
+const schema = require('./schema');
+
 
 const {
     init: databaseInit,
@@ -32,8 +33,9 @@ app.use(
     '/graphql',
     databaseMiddleware,
     graphqlHTTP((req) => ({
+        schema,
         graphiql: config.graphiql,
-    })),
+    }))
 );
 
 module.exports = app;
